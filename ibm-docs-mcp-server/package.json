@@ -1,0 +1,24 @@
+{
+  "name": "ibm-docs-powersc-mcp",
+  "version": "1.0.0",
+  "description": "IBM Documentation MCP Server specialized for IBM PowerSC (Security and Compliance) on IBM Power systems",
+  "type": "module",
+  "main": "build/index.js",
+  "bin": {
+    "ibm-docs-powersc": "./build/index.js"
+  },
+  "scripts": {
+    "build": "node node_modules/typescript/bin/tsc",
+    "start": "node build/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.0",
+    "cheerio": "^1.0.0",
+    "turndown": "^7.2.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1",
+    "typescript": "^5.7.3"
+  }
+}

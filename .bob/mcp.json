@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "ibm-docs-powersc": {
+      "command": "node",
+      "args": [
+        "c:\\Users\\FAHMIRAHMADI\\Documents\\Learning\\AI & web\\IBM I\\ibm-docs-mcp-server\\build\\index.js"
+      ]
+    }
+  }
+}
