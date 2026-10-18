@@ -21,15 +21,22 @@ This server enables AI assistants (such as IBM Bob IDE) to search, browse, fetch
 
 ## 🚀 Installation & Build
 
+Requires Node.js 18+ and npm.
+
 ```powershell
-cd ibm-docs-mcp-server
+git clone https://github.com/cavlord/ibm-docs-mcp.git
+cd ibm-docs-mcp/ibm-docs-mcp-server
 npm install
 npm run build
 ```
 
+`npm run build` compiles `src/` to `build/index.js` (it runs `node node_modules/typescript/bin/tsc`, which also works when the parent folder path contains spaces or `&`).
+
 ---
 
 ## ⚙️ Configuration in Bob IDE (`.bob/mcp.json`)
+
+Create or edit `.bob/mcp.json` in your workspace root and add the server. Use the **full absolute path** to `build/index.js` (Bob cannot resolve relative paths on Windows) and escape backslashes.
 
 ```json
 {
@@ -37,12 +44,56 @@ npm run build
     "ibm-docs-powersc": {
       "command": "node",
       "args": [
-        "c:\\Users\\FAHMIRAHMADI\\Documents\\Learning\\AI & web\\IBM I\\ibm-docs-mcp-server\\build\\index.js"
+        "C:\\path\\to\\ibm-docs-mcp\\ibm-docs-mcp-server\\build\\index.js"
       ]
     }
   }
 }
 ```
+
+Linux/macOS example: `"/home/user/ibm-docs-mcp/ibm-docs-mcp-server/build/index.js"`.
+
+After saving, reload Bob (or toggle the server in the MCP settings). The server `ibm-docs-powersc` should appear with 6 tools.
+
+---
+
+## ▶️ Running & Using the MCP Server
+
+### Run manually (stdio)
+
+```powershell
+cd ibm-docs-mcp-server
+npm start          # same as: node build/index.js
+```
+
+The server speaks JSON-RPC over stdio, so it will appear to "hang" waiting for input. This is expected. Press `Ctrl+C` to stop.
+
+### Verify it responds
+
+```powershell
+node -e "const cp = require('child_process').spawn('node', ['build/index.js']); cp.stdout.on('data', d => console.log('OUT:', d.toString())); cp.stdin.write(JSON.stringify({jsonrpc:'2.0',id:1,method:'initialize',params:{protocolVersion:'2024-11-05',capabilities:{},clientInfo:{name:'test',version:'1.0'}}}) + '\n'); setTimeout(() => process.exit(0), 1500);"
+```
+
+A JSON response containing `serverInfo` means the server works.
+
+### Use from Bob
+
+Once configured, ask Bob PowerSC questions in chat and it will call the tools automatically, for example:
+
+- "How do I configure File Integrity Monitoring in PowerSC 2.2.0?"
+- "Show the syntax of `pscxpert`."
+- "What does the PCI DSS compliance profile check?"
+- "My PowerSC agent can't connect to the server, SSL certificate error. How to troubleshoot?"
+
+Responses include official `https://www.ibm.com/docs/en/powersc-standard/...` links for verification.
+
+### Development
+
+```powershell
+npm run build      # recompile after editing src/
+```
+
+Rebuild and reload the MCP server in Bob after every code change.
 
 ---
 
