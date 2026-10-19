@@ -1,42 +1,42 @@
 # IBM PowerSC Documentation MCP Server
 
-MCP server untuk mencari dan membaca dokumentasi **IBM PowerSC** (Power Security and Compliance) langsung dari Bob. Jawaban selalu menyertakan link dokumentasi resmi IBM.
+An MCP server that lets IBM Bob search and read **IBM PowerSC** (Power Security and Compliance) documentation. Every answer includes links to the official IBM documentation.
 
-## Cara Pakai (3 langkah)
+## Quick Start (3 steps)
 
-**Syarat:** [Node.js](https://nodejs.org) sudah terinstall.
+**Requirement:** [Node.js](https://nodejs.org) installed.
 
-1. **Download** repo ini (tombol hijau **Code → Download ZIP**, lalu extract) atau `git clone https://github.com/cavlord/ibm-docs-mcp.git`.
-2. **Buka IBM Bob → Open Folder** → pilih folder hasil download tadi.
-3. **Ketik prompt ini di chat Bob:**
+1. **Download** this repo (green **Code → Download ZIP** button, then extract) or run `git clone https://github.com/cavlord/ibm-docs-mcp.git`.
+2. **Open IBM Bob → Open Folder** → select the downloaded folder.
+3. **Paste this prompt into the Bob chat:**
 
    ```
-   Buatkan MCP server ini: jalankan npm install dan build di folder ibm-docs-mcp-server, lalu atur .bob/mcp.json dengan path absolut folder ini.
+   Set up this MCP server: run npm install and build in the ibm-docs-mcp-server folder, then configure .bob/mcp.json with the absolute path of this folder.
    ```
 
-Selesai. Setelah Bob selesai, MCP `ibm-docs-powersc` langsung bisa dipakai. Kalau belum muncul, reload Bob.
+That's it. When Bob finishes, the `ibm-docs-powersc` MCP is ready to use. If it doesn't show up, reload Bob.
 
-## Contoh Pertanyaan
+## Example Questions
 
-- "Bagaimana konfigurasi File Integrity Monitoring di PowerSC 2.2.0?"
-- "Tunjukkan syntax `pscxpert`."
-- "Apa saja yang dicek profil PCI DSS?"
-- "Agent PowerSC tidak bisa connect, error SSL certificate. Cara troubleshoot-nya?"
+- "How do I configure File Integrity Monitoring in PowerSC 2.2.0?"
+- "Show me the syntax of `pscxpert`."
+- "What does the PCI DSS compliance profile check?"
+- "My PowerSC agent can't connect, SSL certificate error. How do I troubleshoot it?"
 
-## Tools yang Tersedia
+## Available Tools
 
-| Tool | Fungsi |
+| Tool | Purpose |
 | :--- | :--- |
-| `search_powersc_docs` | Cari topik, command, profil compliance, dan error PowerSC |
-| `get_powersc_toc` | Lihat daftar isi dokumentasi PowerSC (2.2.0, 2.1.0, 2.0.0) |
-| `fetch_ibm_doc_page` | Ambil halaman IBM Documentation dan ubah ke Markdown |
-| `powersc_command_reference` | Syntax dan contoh command (`pscxpert`, `mkrtc`, `pmconf`, dll.) |
-| `powersc_compliance_profile` | Aturan profil PCI DSS, CIS, DoD STIG, GDPR, SAP, dll. |
-| `powersc_troubleshoot` | Solusi masalah agent, SSL, AHAFS, FIM, MFA, dan lokasi log |
+| `search_powersc_docs` | Search PowerSC topics, commands, compliance profiles, and errors |
+| `get_powersc_toc` | Browse the PowerSC documentation table of contents (2.2.0, 2.1.0, 2.0.0) |
+| `fetch_ibm_doc_page` | Fetch an IBM Documentation page and convert it to Markdown |
+| `powersc_command_reference` | Syntax and examples for commands (`pscxpert`, `mkrtc`, `pmconf`, etc.) |
+| `powersc_compliance_profile` | Rules for PCI DSS, CIS, DoD STIG, GDPR, SAP, and other profiles |
+| `powersc_troubleshoot` | Fixes for agent, SSL, AHAFS, FIM, and MFA issues, plus log locations |
 
-## Manual (opsional)
+## Manual Setup (optional)
 
-Kalau tidak mau minta Bob, jalankan sendiri:
+If you prefer not to ask Bob, run it yourself:
 
 ```powershell
 cd ibm-docs-mcp-server
@@ -44,14 +44,14 @@ npm install
 npm run build
 ```
 
-Lalu tambahkan ke `.bob/mcp.json` (pakai **path absolut** ke `build/index.js`):
+Then add this to `.bob/mcp.json` (use the **absolute path** to `build/index.js`):
 
 ```json
 {
   "mcpServers": {
     "ibm-docs-powersc": {
       "command": "node",
-      "args": ["C:\\path\\ke\\ibm-docs-mcp\\ibm-docs-mcp-server\\build\\index.js"]
+      "args": ["C:\\path\\to\\ibm-docs-mcp\\ibm-docs-mcp-server\\build\\index.js"]
     }
   }
 }
